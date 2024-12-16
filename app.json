@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "Password Vault",
-    "slug": "password-vault",
+    "slug": "password-manager-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "sdkVersion": "51.0.0",
+    "sdkVersion": "52.0.0",
     "icon": "./assets/vault.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -29,6 +29,7 @@
       "eas": {
         "projectId": "8d1d075d-50f3-41c7-9bfb-64eca388f981"
       }
-    }
+    },
+    "owner": "nht080603"
   }
 }
