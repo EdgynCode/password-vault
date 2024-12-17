@@ -30,6 +30,10 @@
         "projectId": "8d1d075d-50f3-41c7-9bfb-64eca388f981"
       }
     },
-    "owner": "nht080603"
+    "owner": "nht080603",
+    "plugins": [
+      "expo-localization",
+      "expo-secure-store"
+    ]
   }
 }
