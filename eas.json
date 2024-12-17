@@ -20,7 +20,7 @@
         "buildType": "apk",
         "gradleCommand": ":app:assembleDebug"
       }
-    },
+    }
   },
   "submit": {
     "production": {}
