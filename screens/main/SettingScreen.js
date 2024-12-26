@@ -12,16 +12,21 @@ import {
 import * as SecureStore from "expo-secure-store";
 import * as LocalAuthentication from "expo-local-authentication";
 import { PasswordContext } from "../../contexts/PasswordContext";
+import { useTheme } from "../../contexts/ThemeContext";
 import { Backup, Restore } from "../../utils/BackupRestore";
+import { lightTheme, darkTheme } from "../../components/theme";
 
 export default function SettingScreen() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { setPasswordVisibility } = useContext(PasswordContext);
   const { passwords, loadPasswordInfo } = useContext(PasswordContext);
+  const { theme, toggleTheme } = useTheme();
 
   const [pin, setPin] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [authMethod, setAuthMethod] = useState(null);
+
+  const colors = theme === "dark" ? darkTheme : lightTheme;
 
   // Load the authentication method from storage when the component mounts
   useEffect(() => {
@@ -88,6 +93,16 @@ export default function SettingScreen() {
         <Switch
           value={isPasswordVisible}
           onValueChange={handleShowPasswordToggle}
+        />
+      </View>
+      <View style={styles.optionContainer}>
+        <Text style={[styles.optionText, { color: colors.text }]}>
+          Toggle Dark Mode
+        </Text>
+        <Switch
+          value={theme === "dark"}
+          onValueChange={toggleTheme}
+          thumbColor={colors.primary}
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={() => Backup(passwords)}>

@@ -122,7 +122,7 @@ export default function App() {
               />
               <Stack.Screen
                 name="PINCodeSetup"
-                component={(props) => (
+                children={(props) => (
                   <PINCodeSetup
                     {...props}
                     handleFinishOnboarding={handleFinishOnboarding}
@@ -131,7 +131,7 @@ export default function App() {
               />
               <Stack.Screen
                 name="FingerprintSetup"
-                component={(props) => (
+                children={(props) => (
                   <FingerprintSetup
                     {...props}
                     handleFinishOnboarding={handleFinishOnboarding}
