@@ -11,6 +11,8 @@ import { insertPasswordInfo, updatePasswordInfo } from "../../db/database";
 import { PasswordInfo } from "../../models/PasswordInfo";
 import { PasswordContext } from "../../contexts/PasswordContext";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "../../contexts/ThemeContext";
+import { lightTheme, darkTheme } from "../../components/theme";
 
 export default function AddPasswordScreen({ navigation, route }) {
   const { loadPasswordInfo } = useContext(PasswordContext);
@@ -22,6 +24,8 @@ export default function AddPasswordScreen({ navigation, route }) {
   const [isEditing, setIsEditing] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [strength, setStrength] = useState(0);
+  const { theme } = useTheme();
+  const colors = theme === "dark" ? darkTheme : lightTheme;
 
   const generatePassword = (length = 12) => {
     const charset =
@@ -133,7 +137,7 @@ export default function AddPasswordScreen({ navigation, route }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={styles.title}>{isEditing ? "Edit" : "Add"} Password</Text>
       <Text style={styles.label}>App or Site Name</Text>
       <TextInput
@@ -177,13 +181,22 @@ export default function AddPasswordScreen({ navigation, route }) {
 
       <View style={styles.functionButtonContainer}>
         <TouchableOpacity
-          style={styles.functionButton}
+          style={[styles.functionButton, { backgroundColor: colors.primary }]}
           onPress={handleGeneratePassword}
         >
-          <Text style={styles.functionButtonText}>Auto Generate Password</Text>
+          <Text
+            style={[styles.functionButtonText, { color: colors.buttonText }]}
+          >
+            Auto Generate Password
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.functionButton} onPress={handleSave}>
-          <Text style={styles.functionButtonText}>
+        <TouchableOpacity
+          style={[styles.functionButton, { backgroundColor: colors.primary }]}
+          onPress={handleSave}
+        >
+          <Text
+            style={[styles.functionButtonText, { color: colors.buttonText }]}
+          >
             {isEditing ? "Update" : "Save"}
           </Text>
         </TouchableOpacity>
@@ -197,7 +210,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 20,
-    backgroundColor: "#f7f7f7",
   },
   title: {
     fontSize: 24,
@@ -241,7 +253,6 @@ const styles = StyleSheet.create({
     height: 100,
   },
   functionButton: {
-    backgroundColor: "#0377BC",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
@@ -249,6 +260,5 @@ const styles = StyleSheet.create({
   },
   functionButtonText: {
     fontSize: 18,
-    color: "#fff",
   },
 });

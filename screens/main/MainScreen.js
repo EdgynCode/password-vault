@@ -45,10 +45,6 @@ export default function MainScreen({ navigation }) {
     }
   };
 
-  const handleAddButtonPress = () => {
-    setModalVisible(true);
-  };
-
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <RNPickerSelect

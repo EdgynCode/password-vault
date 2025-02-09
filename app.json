@@ -2,7 +2,7 @@
   "expo": {
     "name": "Password Vault",
     "slug": "password-manager-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "sdkVersion": "52.0.0",
     "icon": "./assets/vault.png",
@@ -35,12 +35,14 @@
     "plugins": [
       "expo-localization",
       "expo-secure-store",
-      "expo-build-properties",
+      [
+        "expo-build-properties",
         {
           "android": {
             "kotlinVersion": "1.9.25"
           }
         }
+      ]
     ]
   }
 }

@@ -10,6 +10,8 @@ import {
 import { NoteContext } from "../../contexts/NoteContext";
 import { SecureNotes } from "../../models";
 import { addSecureNote, updateNote } from "../../db/database";
+import { useTheme } from "../../contexts/ThemeContext";
+import { lightTheme, darkTheme } from "../../components/theme";
 
 export default function AddNoteScreen({ navigation, route }) {
   const { loadSecureNotes } = useContext(NoteContext);
@@ -18,6 +20,8 @@ export default function AddNoteScreen({ navigation, route }) {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const { theme } = useTheme();
+  const colors = theme === "dark" ? darkTheme : lightTheme;
 
   useEffect(() => {
     if (route.params?.item) {
@@ -61,7 +65,7 @@ export default function AddNoteScreen({ navigation, route }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={styles.label}>Note Title</Text>
       <TextInput
         style={styles.input}
@@ -85,8 +89,13 @@ export default function AddNoteScreen({ navigation, route }) {
         onChangeText={setCategory}
         placeholder="Enter category"
       />
-      <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-        <Text style={styles.saveButtonText}>Save</Text>
+      <TouchableOpacity
+        style={[styles.saveButton, { backgroundColor: colors.primary }]}
+        onPress={handleSave}
+      >
+        <Text style={[styles.saveButtonText, { color: colors.buttonText }]}>
+          Save
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -96,7 +105,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
   },
   label: {
     fontSize: 16,
@@ -114,13 +122,11 @@ const styles = StyleSheet.create({
     height: 100,
   },
   saveButton: {
-    backgroundColor: "#0377BC",
     padding: 15,
     borderRadius: 5,
     alignItems: "center",
   },
   saveButtonText: {
-    color: "#fff",
     fontSize: 16,
   },
 });
