@@ -40,8 +40,7 @@ export default function SettingScreen() {
   const checkPIN = async () => {
     const storedPin = await SecureStore.getItemAsync("user_pin");
     if (pin === storedPin) {
-      setIsPasswordVisible(!isPasswordVisible);
-      setPasswordVisibility(!isPasswordVisible);
+      togglePasswordVisibility();
       setIsModalVisible(false);
     } else {
       Alert.alert("Incorrect PIN", "The PIN you entered is incorrect.");
@@ -87,9 +86,11 @@ export default function SettingScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.optionContainer}>
-        <Text style={styles.optionText}>Show Passwords</Text>
+        <Text style={[styles.optionText, { color: colors.text }]}>
+          Show Passwords
+        </Text>
         <Switch
           value={isPasswordVisible}
           onValueChange={handleShowPasswordToggle}
@@ -105,36 +106,60 @@ export default function SettingScreen() {
           thumbColor={colors.primary}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => Backup(passwords)}>
-        <Text style={styles.buttonText}>Backup Passwords</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, { backgroundColor: colors.primary }]}
+        onPress={() => Backup(passwords)}
+      >
+        <Text style={[styles.buttonText, { color: colors.buttonText }]}>
+          Backup Passwords
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: colors.primary }]}
         onPress={() => Restore(loadPasswordInfo)}
       >
-        <Text style={styles.buttonText}>Restore Passwords</Text>
+        <Text style={[styles.buttonText, { color: colors.buttonText }]}>
+          Restore Passwords
+        </Text>
       </TouchableOpacity>
-
       <Modal visible={isModalVisible} animationType="slide">
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Enter PIN to Show Passwords</Text>
+        <View
+          style={[
+            styles.modalContainer,
+            { backgroundColor: colors.modalBackground },
+          ]}
+        >
+          <Text style={[styles.modalTitle, { color: colors.text }]}>
+            Enter PIN to Show Passwords
+          </Text>
           <TextInput
             value={pin}
             onChangeText={setPin}
             keyboardType="numeric"
             secureTextEntry
             maxLength={6}
-            style={styles.pinInput}
+            style={[
+              styles.pinInput,
+              { color: colors.text, borderBottomColor: colors.text },
+            ]}
           />
-          <TouchableOpacity style={styles.modalButton} onPress={checkPIN}>
-            <Text style={styles.modalButtonText}>Submit</Text>
+          <TouchableOpacity
+            style={[styles.modalButton, { backgroundColor: colors.primary }]}
+            onPress={checkPIN}
+          >
+            <Text
+              style={[styles.modalButtonText, { color: colors.buttonText }]}
+            >
+              Submit
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.modalButton}
+            style={[styles.modalButton, { backgroundColor: colors.secondary }]}
             onPress={() => setIsModalVisible(false)}
           >
-            <Text style={styles.modalButtonText}>Cancel</Text>
+            <Text style={[styles.modalButtonText, { color: colors.text }]}>
+              Cancel
+            </Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -146,7 +171,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
   },
   optionContainer: {
     flexDirection: "row",
@@ -159,12 +183,11 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 15,
-    backgroundColor: "#0377BC",
     borderRadius: 5,
     marginVertical: 10,
+    alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
     fontSize: 16,
   },
   modalContainer: {
@@ -179,7 +202,6 @@ const styles = StyleSheet.create({
   },
   pinInput: {
     borderBottomWidth: 1,
-    borderBottomColor: "#000",
     width: 150,
     textAlign: "center",
     marginBottom: 20,
@@ -187,7 +209,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   modalButton: {
-    backgroundColor: "#007AFF",
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
@@ -195,7 +216,6 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   modalButtonText: {
-    color: "#fff",
     fontSize: 16,
   },
 });

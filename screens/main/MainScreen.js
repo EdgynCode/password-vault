@@ -8,6 +8,8 @@ import { NoteContext } from "../../contexts/NoteContext";
 import { UsernameContext } from "../../contexts/UsernameContext";
 import PasswordList from "../../components/PasswordList";
 import NoteList from "../../components/NoteList";
+import { useTheme } from "../../contexts/ThemeContext";
+import { lightTheme, darkTheme } from "../../components/theme";
 
 export default function MainScreen({ navigation }) {
   const [selectedType, setSelectedType] = useState("passwords");
@@ -15,6 +17,8 @@ export default function MainScreen({ navigation }) {
   const { passwords, loadPasswordInfo } = useContext(PasswordContext);
   const { notes, loadSecureNotes } = useContext(NoteContext);
   const { username, setUsername } = useContext(UsernameContext);
+  const { theme } = useTheme();
+  const colors = theme === "dark" ? darkTheme : lightTheme;
 
   useEffect(() => {
     const loadStoredUsername = async () => {
@@ -46,21 +50,30 @@ export default function MainScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <RNPickerSelect
         onValueChange={(value) => handleSelectionChange(value)}
         items={[
           { label: "Passwords", value: "passwords" },
           { label: "Notes", value: "notes" },
         ]}
-        style={pickerSelectStyles}
+        style={{
+          ...pickerSelectStyles,
+          inputIOS: { ...pickerSelectStyles.inputIOS, color: colors.text },
+          inputAndroid: {
+            ...pickerSelectStyles.inputAndroid,
+            color: colors.text,
+          },
+        }}
         value={selectedType}
       />
 
       {selectedType === "passwords" &&
         (passwords.length === 0 ? (
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No passwords added yet</Text>
+            <Text style={[styles.emptyText, { color: colors.text }]}>
+              No passwords added yet
+            </Text>
           </View>
         ) : (
           <PasswordList passwords={passwords} />
@@ -69,14 +82,19 @@ export default function MainScreen({ navigation }) {
       {selectedType === "notes" &&
         (notes.length === 0 ? (
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No notes added yet</Text>
+            <Text style={[styles.emptyText, { color: colors.text }]}>
+              No notes added yet
+            </Text>
           </View>
         ) : (
           <NoteList notes={notes} />
         ))}
 
-      <TouchableOpacity style={styles.addButton} onPress={handleAddButtonPress}>
-        <Ionicons name="add-outline" size={24} color="#fff" />
+      <TouchableOpacity
+        style={[styles.addButton, { backgroundColor: colors.primary }]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Ionicons name="add-outline" size={24} color={colors.buttonText} />
       </TouchableOpacity>
 
       <Modal
@@ -86,31 +104,51 @@ export default function MainScreen({ navigation }) {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Add New</Text>
+          <View
+            style={[
+              styles.modalContent,
+              { backgroundColor: colors.modalBackground },
+            ]}
+          >
+            <Text style={[styles.modalTitle, { color: colors.text }]}>
+              Add New
+            </Text>
             <TouchableOpacity
-              style={styles.modalButton}
+              style={[styles.modalButton, { backgroundColor: colors.primary }]}
               onPress={() => {
                 setModalVisible(false);
                 navigation.navigate("AddPasswordScreen");
               }}
             >
-              <Text style={styles.modalButtonText}>Password</Text>
+              <Text
+                style={[styles.modalButtonText, { color: colors.buttonText }]}
+              >
+                Password
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.modalButton}
+              style={[styles.modalButton, { backgroundColor: colors.primary }]}
               onPress={() => {
                 setModalVisible(false);
                 navigation.navigate("AddNoteScreen");
               }}
             >
-              <Text style={styles.modalButtonText}>Note</Text>
+              <Text
+                style={[styles.modalButtonText, { color: colors.buttonText }]}
+              >
+                Note
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: "#ddd" }]}
+              style={[
+                styles.modalButton,
+                { backgroundColor: colors.secondary },
+              ]}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Text style={[styles.cancelButtonText, { color: colors.text }]}>
+                Cancel
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -147,14 +185,12 @@ const pickerSelectStyles = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f7f7f7",
     padding: 20,
   },
   emptyText: {
     textAlign: "center",
     marginTop: 20,
     fontSize: 16,
-    color: "#aaa",
   },
   emptyContainer: {
     flex: 1,
@@ -165,7 +201,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 20,
     bottom: 20,
-    backgroundColor: "#0377BC",
     width: 56,
     height: 56,
     borderRadius: 28,

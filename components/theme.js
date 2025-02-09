@@ -1,17 +1,17 @@
 export const lightTheme = {
-  background: "#ffffff",
+  background: "#f7f7f7",
   text: "#000000",
-  primary: "#007bff",
-  secondary: "#6c757d",
-  buttonBackground: "#007bff",
+  primary: "#0377BC",
+  secondary: "#ddd",
   buttonText: "#ffffff",
+  modalBackground: "#fff",
 };
 
 export const darkTheme = {
   background: "#121212",
   text: "#ffffff",
   primary: "#bb86fc",
-  secondary: "#444444",
-  buttonBackground: "#bb86fc",
+  secondary: "#444",
   buttonText: "#121212",
+  modalBackground: "#1e1e1e",
 };
