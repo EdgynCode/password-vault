@@ -66,14 +66,14 @@ export default function AddNoteScreen({ navigation, route }) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={styles.label}>Note Title</Text>
+      <Text style={[styles.label, { color: colors.text }]}>Note Title</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.text }]}
         value={title}
         onChangeText={setTitle}
         placeholder="Enter note title"
       />
-      <Text style={styles.label}>Note Content</Text>
+      <Text style={[styles.label, { color: colors.text }]}>Note Content</Text>
       <TextInput
         style={[styles.input, styles.textArea]}
         value={content}
@@ -82,9 +82,9 @@ export default function AddNoteScreen({ navigation, route }) {
         multiline
         numberOfLines={5}
       />
-      <Text style={styles.label}>Category</Text>
+      <Text style={[styles.label, { color: colors.text }]}>Category</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.text }]}
         value={category}
         onChangeText={setCategory}
         placeholder="Enter category"

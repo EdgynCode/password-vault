@@ -138,23 +138,27 @@ export default function AddPasswordScreen({ navigation, route }) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={styles.title}>{isEditing ? "Edit" : "Add"} Password</Text>
-      <Text style={styles.label}>App or Site Name</Text>
+      <Text style={[styles.title, { color: colors.text }]}>
+        {isEditing ? "Edit" : "Add"} Password
+      </Text>
+      <Text style={[styles.label, { color: colors.text }]}>
+        App or Site Name
+      </Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.text }]}
         value={appname}
         onChangeText={setAppname}
       />
-      <Text style={styles.label}>Username</Text>
+      <Text style={[styles.label, { color: colors.text }]}>Username</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.text }]}
         value={username}
         onChangeText={setUsername}
       />
-      <Text style={styles.label}>Password</Text>
+      <Text style={[styles.label, { color: colors.text }]}>Password</Text>
       <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.passwordInput}
+          style={[styles.passwordInput, { color: colors.text }]}
           value={password}
           onChangeText={handlePasswordChange}
           secureTextEntry={!passwordVisible}
@@ -174,7 +178,7 @@ export default function AddPasswordScreen({ navigation, route }) {
 
       <Text style={styles.label}>Category</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.text }]}
         value={category}
         onChangeText={setCategory}
       />
@@ -227,7 +231,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 8,
     borderRadius: 4,
-    backgroundColor: "#fff",
   },
   passwordInput: {
     flex: 1,
@@ -236,7 +239,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 8,
     borderRadius: 4,
-    backgroundColor: "#fff",
   },
   passwordContainer: {
     flexDirection: "row",

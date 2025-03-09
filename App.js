@@ -22,32 +22,46 @@ import {
   UserSupportScreen,
 } from "./screens/main";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useTheme } from "./contexts/ThemeContext";
+import { lightTheme, darkTheme } from "./components/theme";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function AppMainScreen() {
+  const { theme } = useTheme();
+  const colors = theme === "dark" ? darkTheme : lightTheme;
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Settings") {
-            iconName = focused ? "settings" : "settings-outline";
-          } else if (route.name == "Support") {
-            iconName = focused ? "help-circle" : "help-circle-outline";
+          switch (route.name) {
+            case "Home":
+              iconName = focused ? "home" : "home-outline";
+              break;
+            case "Settings":
+              iconName = focused ? "settings" : "settings-outline";
+              break;
+            case "Support":
+              iconName = focused ? "help-circle" : "help-circle-outline";
+              break;
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#0377BC",
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: "gray",
         tabBarStyle: {
           display: "flex",
+          backgroundColor: colors.background,
         },
+        headerStyle: {
+          backgroundColor: colors.headerBackground,
+        },
+        headerTintColor: colors.headerText,
       })}
     >
       <Tab.Screen name="Home" component={MainScreen} />
